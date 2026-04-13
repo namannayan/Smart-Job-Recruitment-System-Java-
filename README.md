@@ -39,61 +39,7 @@ JDBC	Database connectivity
 MySQL 8.0	Relational database
 Maven	Dependency management & build
 Eclipse IDE	Development environment
-Project Structure
-job-portal-jdbc/
-├── pom.xml
-├── src/
-│   └── main/
-│       └── java/
-│           └── com/
-│               └── java/
-│                   ├── Main.java                 # Entry point
-│                   ├── User.java                 # User model
-│                   ├── Job.java                  # Job model
-│                   ├── Application.java          # Application model
-│                   ├── DatabaseUtil.java         # DB connection & table creation
-│                   ├── UserDAO.java              # User database operations
-│                   ├── JobDAO.java               # Job database operations
-│                   ├── ApplicationDAO.java       # Application database operations
-│                   └── JobSystem.java            # Main service & menu logic
-└── README.md
 
-Module Connections
-
-┌─────────────────────────────────────────────────────────────┐
-│                         Main.java                            │
-│                    (Application Entry)                        │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                      JobSystem.java                          │
-│            (Business Logic & User Interface)                 │
-└───────┬───────────────────┬───────────────────┬─────────────┘
-        │                   │                   │
-        ▼                   ▼                   ▼
-┌───────────────┐   ┌───────────────┐   ┌───────────────┐
-│   UserDAO     │   │    JobDAO     │   │ ApplicationDAO│
-│  (User CRUD)  │   │  (Job CRUD)   │   │ (App CRUD)    │
-└───────┬───────┘   └───────┬───────┘   └───────┬───────┘
-        │                   │                   │
-        └───────────────────┼───────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                    DatabaseUtil.java                         │
-│       (Connection Pooling & Table Auto-Creation)             │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│                     MySQL Database                           │
-│  ┌─────────┐    ┌─────────┐    ┌──────────────┐             │
-│  │  users  │◄───│  jobs   │    │ applications │             │
-│  └─────────┘    └────┬────┘    └──────┬───────┘             │
-│                      └────────────────┘                      │
-│                    (Foreign Key Relations)                   │
-└─────────────────────────────────────────────────────────────┘
 
 Flow Explanation:
 
