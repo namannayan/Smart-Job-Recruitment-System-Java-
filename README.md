@@ -43,22 +43,108 @@ A console-based Job Recruitment System built with Java, JDBC, and MySQL. It allo
 
 ---
 
-## 📁 Project Structure
 
-job-portal-jdbc/
-├── pom.xml
-├── src/
-│ └── main/
-│ └── java/
-│ └── com/
-│ └── java/
-│ ├── Main.java
-│ ├── User.java
-│ ├── Job.java
-│ ├── Application.java
-│ ├── DatabaseUtil.java
-│ ├── UserDAO.java
-│ ├── JobDAO.java
-│ ├── ApplicationDAO.java
-│ └── JobSystem.java
-└── README.md
+---
+
+## ⚙️ Setup Instructions
+
+### 📌 Prerequisites
+- Java JDK 11 or higher
+- MySQL Server 8.0+
+- Maven
+- Eclipse IDE (optional)
+
+---
+
+## 🗄️ Database Schema
+
+### users
+
+| Column | Type | Description |
+|--------|------|------------|
+| id | INT (PK, AI) | Unique user ID |
+| name | VARCHAR(100) | Full name |
+| email | VARCHAR(100) | Unique email |
+| password | VARCHAR(100) | Password |
+| role | VARCHAR(20) | JobSeeker / Recruiter |
+| resume | TEXT | Resume text |
+
+---
+
+### jobs
+
+| Column | Type | Description |
+|--------|------|------------|
+| id | INT (PK, AI) | Job ID |
+| title | VARCHAR(200) | Job title |
+| location | VARCHAR(100) | Location |
+| salary | INT | Salary |
+| recruiter_id | INT (FK) | References users(id) |
+| skills | TEXT | Required skills |
+
+---
+
+### applications
+
+| Column | Type | Description |
+|--------|------|------------|
+| id | INT (PK, AI) | Application ID |
+| user_id | INT (FK) | References users(id) |
+| job_id | INT (FK) | References jobs(id) |
+| tfidf_score | DOUBLE | Match score |
+| application_date | TIMESTAMP | Auto timestamp |
+
+---
+
+### 🔗 Foreign Keys
+- jobs.recruiter_id → users.id (ON DELETE CASCADE)
+- applications.user_id → users.id (ON DELETE CASCADE)
+- applications.job_id → jobs.id (ON DELETE CASCADE)
+
+---
+
+## 🧠 TF-IDF Ranking Algorithm
+
+- **Term Frequency (TF)**  
+  = (skill occurrences in resume) / (total words in resume)
+
+- **Inverse Document Frequency (IDF)**  
+  = log((total resumes + 1) / (resumes containing skill + 1))
+
+- **Final Score**  
+  = Σ (TF × IDF)
+
+👉 Higher score = Better match
+
+---
+
+## 🔮 Future Enhancements
+- GUI using JavaFX or Swing
+- Email notifications
+- Resume upload (.pdf, .docx)
+- Advanced filters (location, salary)
+- Admin dashboard
+- REST API using Spring Boot
+
+---
+
+## ⚠️ Troubleshooting
+
+### ❌ Access denied for MySQL
+- Check username/password in `DatabaseUtil.java`
+- Try: `mysql -u root -p`
+
+### ❌ Public Key Retrieval Error
+- Ensure `allowPublicKeyRetrieval=true` in connection URL
+
+### ❌ Java Version Error
+- Replace `"""` text blocks with normal strings for Java 11
+
+---
+
+## 📌 Author
+Your Name
+
+---
+
+## ⭐ If you like this project, give it a star!
